@@ -73,7 +73,13 @@
         "pts": 1
       }
     ],
-    "negative": []
+    "negative": [
+      {
+        "emoji": "⚠️",
+        "label": "brother/amma/appa beat",
+        "pts": -5
+      }
+    ]
   },
   "rewards": [
     {
