@@ -1,36 +1,142 @@
 {
   "kids": [
-    { "id": "niranjan", "name": "Niranjan", "avatar": "🐯", "points": 0, "totalEarned": 0 },
-    { "id": "nikhilan", "name": "Nikhilan", "avatar": "🐉", "points": 0, "totalEarned": 0 }
+    {
+      "id": "niranjan",
+      "name": "Niranjan",
+      "avatar": "\ud83d\udc2f",
+      "points": 2,
+      "totalEarned": 2
+    },
+    {
+      "id": "nikhilan",
+      "name": "Nikhilan",
+      "avatar": "\ud83d\udc09",
+      "points": 0,
+      "totalEarned": 0
+    }
   ],
   "behaviors": {
     "positive": [
-      { "emoji": "📚", "label": "Finished homework", "pts": 2 },
-      { "emoji": "🪥", "label": "Morning routine done", "pts": 1 },
-      { "emoji": "📖", "label": "20 min reading", "pts": 2 },
-      { "emoji": "🤝", "label": "Helped without asking", "pts": 3 },
-      { "emoji": "❤️", "label": "Kind to brother", "pts": 2 },
-      { "emoji": "🧸", "label": "Cleaned up toys", "pts": 1 },
-      { "emoji": "🥦", "label": "Ate veggies", "pts": 1 },
-      { "emoji": "😴", "label": "Bedtime on time", "pts": 1 },
-      { "emoji": "💪", "label": "Tried something hard", "pts": 3 }
+      {
+        "emoji": "\ud83d\udcda",
+        "label": "Finished homework",
+        "pts": 2
+      },
+      {
+        "emoji": "\ud83e\udea5",
+        "label": "Morning routine done",
+        "pts": 1
+      },
+      {
+        "emoji": "\ud83d\udcd6",
+        "label": "20 min reading",
+        "pts": 2
+      },
+      {
+        "emoji": "\ud83e\udd1d",
+        "label": "Helped without asking",
+        "pts": 3
+      },
+      {
+        "emoji": "\u2764\ufe0f",
+        "label": "Kind to brother",
+        "pts": 2
+      },
+      {
+        "emoji": "\ud83e\uddf8",
+        "label": "Cleaned up toys",
+        "pts": 1
+      },
+      {
+        "emoji": "\ud83e\udd66",
+        "label": "Ate veggies",
+        "pts": 1
+      },
+      {
+        "emoji": "\ud83d\ude34",
+        "label": "Bedtime on time",
+        "pts": 1
+      },
+      {
+        "emoji": "\ud83d\udcaa",
+        "label": "Tried something hard",
+        "pts": 3
+      }
     ],
     "negative": [
-      { "emoji": "😤", "label": "Fighting with brother", "pts": -2 },
-      { "emoji": "🙉", "label": "Not listening", "pts": -1 },
-      { "emoji": "📱", "label": "Screen time over limit", "pts": -2 },
-      { "emoji": "🧹", "label": "Mess left out", "pts": -1 }
+      {
+        "emoji": "\ud83d\ude24",
+        "label": "Fighting with brother",
+        "pts": -2
+      },
+      {
+        "emoji": "\ud83d\ude49",
+        "label": "Not listening",
+        "pts": -1
+      },
+      {
+        "emoji": "\ud83d\udcf1",
+        "label": "Screen time over limit",
+        "pts": -2
+      },
+      {
+        "emoji": "\ud83e\uddf9",
+        "label": "Mess left out",
+        "pts": -1
+      }
     ]
   },
   "rewards": [
-    { "emoji": "🍦", "label": "Ice cream treat", "cost": 25 },
-    { "emoji": "📺", "label": "30 min extra screen time", "cost": 30 },
-    { "emoji": "🍕", "label": "Pick the dinner", "cost": 40 },
-    { "emoji": "🎬", "label": "Movie night — your pick", "cost": 60 },
-    { "emoji": "🏊", "label": "Special outing", "cost": 100 },
-    { "emoji": "🎲", "label": "New board game", "cost": 250 },
-    { "emoji": "🧱", "label": "Big LEGO set", "cost": 600 },
-    { "emoji": "🎁", "label": "Dream gift — you choose!", "cost": 1000 }
+    {
+      "emoji": "\ud83c\udf66",
+      "label": "Ice cream treat",
+      "cost": 25
+    },
+    {
+      "emoji": "\ud83d\udcfa",
+      "label": "30 min extra screen time",
+      "cost": 30
+    },
+    {
+      "emoji": "\ud83c\udf55",
+      "label": "Pick the dinner",
+      "cost": 40
+    },
+    {
+      "emoji": "\ud83c\udfac",
+      "label": "Movie night \u2014 your pick",
+      "cost": 60
+    },
+    {
+      "emoji": "\ud83c\udfca",
+      "label": "Special outing",
+      "cost": 100
+    },
+    {
+      "emoji": "\ud83c\udfb2",
+      "label": "New board game",
+      "cost": 250
+    },
+    {
+      "emoji": "\ud83e\uddf1",
+      "label": "Big LEGO set",
+      "cost": 600
+    },
+    {
+      "emoji": "\ud83c\udf81",
+      "label": "Dream gift \u2014 you choose!",
+      "cost": 1000
+    }
   ],
-  "log": []
+  "log": [
+    {
+      "ts": 1788142132741,
+      "kid": "niranjan",
+      "type": "award",
+      "label": "Finished homework",
+      "emoji": "\ud83d\udcda",
+      "pts": 2,
+      "by": "Appa"
+    }
+  ]
 }
