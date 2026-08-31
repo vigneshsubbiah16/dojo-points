@@ -11,8 +11,8 @@
       "id": "nikhilan",
       "name": "Nikhilan",
       "avatar": "🐉",
-      "points": 0,
-      "totalEarned": 0
+      "points": 1,
+      "totalEarned": 1
     }
   ],
   "behaviors": {
@@ -70,6 +70,15 @@
     {
       "ts": 1788144248399,
       "kid": "niranjan",
+      "type": "award",
+      "label": "Morning routine done",
+      "emoji": "🪥",
+      "pts": 1,
+      "by": "Appa"
+    },
+    {
+      "ts": 1788144297929,
+      "kid": "nikhilan",
       "type": "award",
       "label": "Morning routine done",
       "emoji": "🪥",
