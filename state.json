@@ -61,6 +61,11 @@
         "emoji": "💪",
         "label": "Tried something hard",
         "pts": 3
+      },
+      {
+        "emoji": "✨",
+        "label": "half home work",
+        "pts": 1
       }
     ],
     "negative": []
