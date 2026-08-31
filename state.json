@@ -4,8 +4,8 @@
       "id": "niranjan",
       "name": "Niranjan",
       "avatar": "🐯",
-      "points": 4,
-      "totalEarned": 4
+      "points": 5,
+      "totalEarned": 5
     },
     {
       "id": "nikhilan",
@@ -149,6 +149,15 @@
       "type": "award",
       "label": "Morning routine done",
       "emoji": "🪥",
+      "pts": 1,
+      "by": "Appa"
+    },
+    {
+      "ts": 1788216847983,
+      "kid": "niranjan",
+      "type": "award",
+      "label": "dress change without asking",
+      "emoji": "✨",
       "pts": 1,
       "by": "Appa"
     }
