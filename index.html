@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dojo Bros</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥋</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800&display=swap">
+<style>
+:root{
+  --ink:#2B2350; --ink-soft:#6A6390; --ground:#F3EFE6; --card:#FFFFFF;
+  --header:#232B5D; --header-ink:#FFF7E8;
+  --gold:#F5B301; --gold-deep:#D99700;
+  --good:#1E9E6A; --bad:#E14B4B;
+  --k1:#0FA37F; --k1-soft:#E2F5EE;
+  --k2:#F26B3A; --k2-soft:#FDEDE4;
+  --line:#E7E0D2; --shadow:0 4px 14px rgba(43,35,80,.10);
+  --r:18px;
+  --display:'Baloo 2',system-ui,sans-serif;
+  --body:'Nunito','Avenir Next',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:8px}
+input,select{font-family:inherit;font-size:inherit;color:var(--ink)}
+
+/* ---------- header ---------- */
+header{background:var(--header);color:var(--header-ink);padding:14px 18px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:20;box-shadow:0 2px 10px rgba(0,0,0,.25)}
+header h1{font-family:var(--display);font-weight:800;font-size:1.5rem;margin:0;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+header .spacer{flex:1}
+.sync-dot{width:9px;height:9px;border-radius:50%;background:#8b93c9;flex:none;transition:background .3s}
+.sync-dot.ok{background:#4ade80}.sync-dot.err{background:#f87171}
+.hbtn{background:rgba(255,255,255,.14);color:var(--header-ink);border-radius:999px;padding:7px 14px;font-weight:800;font-size:.85rem;display:flex;align-items:center;gap:6px}
+.hbtn:hover{background:rgba(255,255,255,.24)}
+
+main{max-width:880px;margin:0 auto;padding:20px 16px 80px;display:flex;flex-direction:column;gap:26px}
+
+/* ---------- kid cards ---------- */
+.kids{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.kids{grid-template-columns:1fr}}
+.kid-card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;text-align:center;position:relative;border-top:6px solid var(--kc)}
+.kid-card .inner{padding:18px 16px 14px;width:100%}
+.kid-card .avatar{font-size:3.4rem;line-height:1;display:block;filter:drop-shadow(0 3px 4px rgba(43,35,80,.18))}
+.kid-card h2{font-family:var(--display);font-weight:800;font-size:1.35rem;margin:.25rem 0 0;color:var(--kc)}
+.kid-card .pts{font-family:var(--display);font-weight:800;font-size:3rem;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.kid-card .pts small{font-size:1rem;color:var(--ink-soft);font-family:var(--body);font-weight:700}
+.chips{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.chip{background:var(--kcs);color:var(--kc);border-radius:999px;padding:4px 11px;font-size:.8rem;font-weight:800;font-variant-numeric:tabular-nums}
+.chip.streak{background:#FFF3D1;color:var(--gold-deep)}
+.belt{height:16px;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.kid-actions{display:flex;border-top:1px solid var(--line)}
+.kid-actions button{flex:1;padding:11px 6px;font-weight:800;font-size:.9rem;color:var(--ink-soft)}
+.kid-actions button.award{color:var(--good)}
+.kid-actions button:hover{background:#FAF7F0}
+.kid-actions button+button{border-left:1px solid var(--line)}
+
+/* ---------- sections ---------- */
+section>h3{font-family:var(--display);font-weight:800;font-size:1.15rem;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+section>h3 .count{font-size:.8rem;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 10px;color:var(--ink-soft);font-family:var(--body)}
+
+/* rewards shelf */
+.rewards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.reward{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:14px 12px;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
+.reward .emoji{font-size:2rem;line-height:1}
+.reward .name{font-weight:800;font-size:.9rem;text-wrap:balance}
+.reward .cost{color:var(--gold-deep);font-weight:800;font-variant-numeric:tabular-nums;font-size:.85rem}
+.reward .redeem-row{display:flex;gap:6px;margin-top:2px;flex-wrap:wrap;justify-content:center}
+.reward .redeem-row button{border-radius:999px;padding:4px 12px;font-size:.78rem;font-weight:800;color:#fff}
+.reward .redeem-row button:disabled{opacity:.35;cursor:not-allowed}
+
+/* history */
+.day-group{margin-bottom:14px}
+.day-label{font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 6px 4px}
+.log-item{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:10px 14px;display:flex;align-items:center;gap:11px;margin-bottom:8px}
+.log-item .emoji{font-size:1.4rem;flex:none}
+.log-item .what{flex:1;min-width:0}
+.log-item .what .label{font-weight:800;font-size:.95rem}
+.log-item .what .meta{font-size:.78rem;color:var(--ink-soft)}
+.log-item .delta{font-family:var(--display);font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums;flex:none}
+.delta.plus{color:var(--good)}.delta.minus{color:var(--bad)}
+.kid-tag{display:inline-block;border-radius:999px;padding:1px 8px;font-size:.72rem;font-weight:800;color:#fff;vertical-align:1px}
+.hist-filter{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.hist-filter button{border-radius:999px;padding:5px 14px;font-weight:800;font-size:.82rem;background:var(--card);border:1.5px solid var(--line);color:var(--ink-soft)}
+.hist-filter button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.more-btn{display:block;margin:4px auto;color:var(--ink-soft);font-weight:800;font-size:.85rem;text-decoration:underline}
+
+/* ---------- modals ---------- */
+dialog{border:none;border-radius:22px;box-shadow:0 20px 60px rgba(20,15,50,.35);padding:0;max-width:430px;width:calc(100vw - 32px);background:var(--card);color:var(--ink);max-height:88vh}
+dialog::backdrop{background:rgba(26,20,60,.55)}
+.modal-head{padding:16px 20px 10px;display:flex;align-items:center;gap:10px;position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--line);z-index:2}
+.modal-head h4{font-family:var(--display);font-weight:800;font-size:1.15rem;margin:0;flex:1}
+.modal-head .x{font-size:1.2rem;color:var(--ink-soft);padding:4px 10px}
+.modal-body{padding:14px 20px 20px;overflow-y:auto}
+.beh-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.beh-grid button{border:2px solid var(--line);border-radius:14px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:3px;background:#FCFAF5}
+.beh-grid button:hover{border-color:var(--gold)}
+.beh-grid .bl{font-weight:800;font-size:.85rem;text-align:center;text-wrap:balance}
+.beh-grid .bp{font-weight:800;font-size:.8rem;font-variant-numeric:tabular-nums}
+.beh-grid .bp.plus{color:var(--good)}.beh-grid .bp.minus{color:var(--bad)}
+.subhead{font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:16px 0 8px}
+.subhead:first-child{margin-top:0}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.field label{font-weight:800;font-size:.85rem}
+.field input{border:2px solid var(--line);border-radius:12px;padding:9px 12px;background:#FCFAF5}
+.field .hint{font-size:.78rem;color:var(--ink-soft)}
+.btn{border-radius:999px;padding:10px 20px;font-weight:800;color:#fff;background:var(--ink)}
+.btn.gold{background:var(--gold-deep)}
+.btn.ghost{background:transparent;color:var(--ink-soft);border:2px solid var(--line)}
+.btn-row{display:flex;gap:10px;justify-content:flex-end;margin-top:6px;flex-wrap:wrap}
+.seg{display:flex;gap:8px}
+.seg button{flex:1;border:2px solid var(--line);border-radius:12px;padding:9px;font-weight:800;background:#FCFAF5}
+.seg button.on{border-color:var(--ink);background:var(--ink);color:#fff}
+.edit-row{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.edit-row input.em{width:52px;text-align:center}
+.edit-row input.lb{flex:1;min-width:0}
+.edit-row input.pt{width:64px;text-align:center}
+.edit-row input{border:1.5px solid var(--line);border-radius:10px;padding:7px 8px;background:#FCFAF5}
+.edit-row .del{color:var(--bad);font-weight:800;padding:4px 8px}
+.addline{color:var(--good);font-weight:800;font-size:.85rem;padding:4px 0}
+.belt-progress{background:#F1EDE3;border-radius:999px;height:12px;overflow:hidden;margin:6px 0 4px}
+.belt-progress>div{height:100%;border-radius:999px;transition:width .5s}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.badge{background:#FFF3D1;border-radius:12px;padding:6px 10px;font-size:.8rem;font-weight:800;color:var(--gold-deep)}
+.badge.locked{background:#F1EDE3;color:#B4AC9C;filter:grayscale(1)}
+
+/* toast + confetti */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;border-radius:999px;padding:10px 20px;font-weight:800;box-shadow:var(--shadow);transition:transform .25s;z-index:60;max-width:90vw;text-align:center}
+#toast.show{transform:translateX(-50%) translateY(0)}
+#toast.err{background:var(--bad)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+.locked-note{font-size:.85rem;color:var(--ink-soft);text-align:center;padding:14px}
+footer{text-align:center;color:var(--ink-soft);font-size:.78rem;padding:10px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🥋 Dojo Bros</h1>
+  <span class="sync-dot" id="syncDot" title="sync status"></span>
+  <span class="spacer"></span>
+  <button class="hbtn" id="parentBtn">🔒 Parent</button>
+</header>
+
+<main id="main">
+  <section><div class="kids" id="kids"></div></section>
+
+  <section id="rewardsSec">
+    <h3>🎁 Reward Shelf <button class="hbtn" id="editRewards" style="display:none;background:var(--card);color:var(--ink-soft);border:1.5px solid var(--line)">edit</button></h3>
+    <div class="rewards" id="rewards"></div>
+  </section>
+
+  <section>
+    <h3>📜 Dojo Scroll <span class="count" id="histCount"></span></h3>
+    <div class="hist-filter" id="histFilter"></div>
+    <div id="history"></div>
+  </section>
+
+  <footer>Points sync for the whole family · white belt → black belt 🥷</footer>
+</main>
+
+<!-- award modal -->
+<dialog id="awardDlg">
+  <div class="modal-head"><h4 id="awardTitle">Award points</h4><button class="x" data-close>✕</button></div>
+  <div class="modal-body">
+    <div class="subhead">⭐ Positive</div><div class="beh-grid" id="posGrid"></div>
+    <div class="subhead">🌧 Needs work</div><div class="beh-grid" id="negGrid"></div>
+    <button class="addline" id="editBehaviors" style="display:none">＋ edit behaviors…</button>
+  </div>
+</dialog>
+
+<!-- kid detail modal -->
+<dialog id="kidDlg">
+  <div class="modal-head"><h4 id="kidDlgTitle"></h4><button class="x" data-close>✕</button></div>
+  <div class="modal-body" id="kidDlgBody"></div>
+</dialog>
+
+<!-- parent modal -->
+<dialog id="parentDlg">
+  <div class="modal-head"><h4>Parent mode</h4><button class="x" data-close>✕</button></div>
+  <div class="modal-body" id="parentBody"></div>
+</dialog>
+
+<!-- editor modal (behaviors / rewards) -->
+<dialog id="editDlg">
+  <div class="modal-head"><h4 id="editTitle">Edit</h4><button class="x" data-close>✕</button></div>
+  <div class="modal-body" id="editBody"></div>
+</dialog>
+
+<canvas id="confetti"></canvas>
+<div id="toast" hidden></div>
+
+<script>
+'use strict';
+/* ================= config ================= */
+const OWNER='vigneshsubbiah16', REPO='dojo-points', BRANCH='main', FILE='state.json';
+const API=`https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE}`;
+const BELTS=[
+  {name:'White',  at:0,   c:'#E8E4DA', ink:'#6A6390'},
+  {name:'Yellow', at:25,  c:'#F5D33F', ink:'#7A6300'},
+  {name:'Orange', at:60,  c:'#F59C3F', ink:'#7A4600'},
+  {name:'Green',  at:100, c:'#3FB56B', ink:'#fff'},
+  {name:'Blue',   at:160, c:'#3F7EF5', ink:'#fff'},
+  {name:'Purple', at:240, c:'#8A4FE0', ink:'#fff'},
+  {name:'Brown',  at:340, c:'#8A5A33', ink:'#fff'},
+  {name:'Red',    at:460, c:'#DE4040', ink:'#fff'},
+  {name:'Black',  at:600, c:'#23232B', ink:'#F5B301'},
+];
+const BADGES=[
+  {at:25,emoji:'🌟',name:'First 25'},{at:50,emoji:'🔥',name:'Half-century'},
+  {at:100,emoji:'🏅',name:'Century club'},{at:250,emoji:'🏆',name:'Champion 250'},
+  {at:500,emoji:'👑',name:'Legend 500'},{at:1000,emoji:'🐉',name:'Dragon 1000'},
+];
+const KIDCOLORS={0:{c:'var(--k1)',cs:'var(--k1-soft)',hex:'#0FA37F'},1:{c:'var(--k2)',cs:'var(--k2-soft)',hex:'#F26B3A'}};
+
+/* ================= state ================= */
+let state=null, sha=null, histLimit=25, histKid='all', busy=false;
+const LS={token:'dojo_token',who:'dojo_who'};
+const token=()=>{try{return localStorage.getItem(LS.token)||''}catch(e){return ''}};
+const who=()=>{try{return localStorage.getItem(LS.who)||'Parent'}catch(e){return 'Parent'}};
+const isParent=()=>!!token();
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ================= github io ================= */
+function ghHeaders(){
+  const h={'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
+  if(token()) h['Authorization']='Bearer '+token();
+  return h;
+}
+async function loadState(){
+  const r=await fetch(`${API}?ref=${BRANCH}&t=${Date.now()}`,{headers:ghHeaders(),cache:'no-store'});
+  if(!r.ok) throw Object.assign(new Error('load '+r.status),{status:r.status});
+  const j=await r.json();
+  sha=j.sha;
+  state=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));
+  return state;
+}
+async function saveState(msg){
+  const body={message:msg,branch:BRANCH,sha,content:btoa(unescape(encodeURIComponent(JSON.stringify(state,null,2))))};
+  const r=await fetch(API,{method:'PUT',headers:{...ghHeaders(),'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok) throw Object.assign(new Error('save '+r.status),{status:r.status});
+  const j=await r.json(); sha=j.content.sha;
+}
+/* apply a mutation against freshest state; retry once on write conflict */
+async function commit(mutate,msg){
+  if(busy){toast('One sec — still saving…',true);return false}
+  busy=true; setDot('');
+  try{
+    for(let attempt=0;attempt<2;attempt++){
+      await loadState();          // freshest copy + sha
+      mutate(state);
+      try{ await saveState(msg); setDot('ok'); render(); busy=false; return true; }
+      catch(e){ if((e.status===409||e.status===422)&&attempt===0) continue; throw e; }
+    }
+    throw new Error('conflict');
+  }catch(e){
+    setDot('err');
+    toast(e.status===401||e.status===403?'Token rejected — check parent settings':'Could not save — try again',true);
+    try{await loadState();render()}catch(_){}
+    busy=false; return false;
+  }
+}
+function setDot(cls){$('syncDot').className='sync-dot '+cls}
+
+/* ================= derived ================= */
+const dayKey=ts=>{const d=new Date(ts);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+function weekStart(){const d=new Date();d.setHours(0,0,0,0);const dow=(d.getDay()+6)%7;d.setDate(d.getDate()-dow);return d.getTime()}
+const kidLog=k=>state.log.filter(e=>e.kid===k.id);
+const weekPts=k=>kidLog(k).filter(e=>e.ts>=weekStart()&&e.type==='award').reduce((s,e)=>s+e.pts,0);
+function streak(k){
+  const days=new Set(kidLog(k).filter(e=>e.type==='award'&&e.pts>0).map(e=>dayKey(e.ts)));
+  let n=0;const d=new Date();
+  if(!days.has(dayKey(d.getTime()))) d.setDate(d.getDate()-1); // today not earned yet → count from yesterday
+  while(days.has(dayKey(d.getTime()))){n++;d.setDate(d.getDate()-1)}
+  return n;
+}
+function belt(total){let b=BELTS[0],next=null;for(const x of BELTS){if(total>=x.at)b=x;else{next=x;break}}return{b,next}}
+
+/* ================= render ================= */
+function render(){
+  if(!state)return;
+  renderKids(); renderRewards(); renderHistory();
+  $('editRewards').style.display=isParent()?'':'none';
+  $('editBehaviors').style.display=isParent()?'':'none';
+  $('parentBtn').innerHTML=isParent()?'🔓 '+esc(who()):'🔒 Parent';
+}
+function renderKids(){
+  $('kids').innerHTML=state.kids.map((k,i)=>{
+    const col=KIDCOLORS[i%2],{b,next}=belt(k.totalEarned),s=streak(k),w=weekPts(k);
+    return `<div class="kid-card" style="--kc:${col.c};--kcs:${col.cs}">
+      <div class="inner">
+        <span class="avatar">${k.avatar}</span>
+        <h2>${esc(k.name)}</h2>
+        <div class="pts">${k.points}<small> pts</small></div>
+        <div class="chips">
+          <span class="chip">${w>=0?'+':''}${w} this week</span>
+          ${s>0?`<span class="chip streak">🔥 ${s}-day streak</span>`:''}
+        </div>
+      </div>
+      <div class="belt" style="background:${b.c};color:${b.ink}">${b.name} belt${next?` · ${next.at-k.totalEarned} to ${next.name.toLowerCase()}`:' · MAX'}</div>
+      <div class="kid-actions">
+        ${isParent()?`<button class="award" data-award="${k.id}">⭐ Give points</button>`:''}
+        <button data-detail="${k.id}">📖 My story</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function renderRewards(){
+  $('rewards').innerHTML=state.rewards.map((r,ri)=>`
+    <div class="reward">
+      <span class="emoji">${r.emoji}</span>
+      <span class="name">${esc(r.label)}</span>
+      <span class="cost">${r.cost} pts</span>
+      ${isParent()?`<div class="redeem-row">${state.kids.map((k,i)=>
+        `<button style="background:${KIDCOLORS[i%2].hex}" data-redeem="${k.id}|${ri}" ${k.points<r.cost?'disabled':''}>${esc(k.name.slice(0,4))}</button>`).join('')}</div>`
+      :`<div class="redeem-row">${state.kids.map((k,i)=>{
+          const pct=Math.min(100,Math.round(k.points/r.cost*100));
+          return `<span class="chip" style="background:${KIDCOLORS[i%2].cs};color:${KIDCOLORS[i%2].hex}">${esc(k.name.slice(0,4))} ${pct}%</span>`}).join('')}</div>`}
+    </div>`).join('');
+}
+function renderHistory(){
+  const kids=Object.fromEntries(state.kids.map((k,i)=>[k.id,{...k,col:KIDCOLORS[i%2].hex}]));
+  let log=[...state.log].sort((a,b)=>b.ts-a.ts);
+  if(histKid!=='all') log=log.filter(e=>e.kid===histKid);
+  $('histCount').textContent=log.length+' entries';
+  $('histFilter').innerHTML=[`<button data-f="all" class="${histKid==='all'?'on':''}">Everyone</button>`,
+    ...state.kids.map(k=>`<button data-f="${k.id}" class="${histKid===k.id?'on':''}">${esc(k.name)}</button>`)].join('');
+  const shown=log.slice(0,histLimit), groups=new Map();
+  for(const e of shown){const d=dayKey(e.ts);if(!groups.has(d))groups.set(d,[]);groups.get(d).push(e)}
+  const today=dayKey(Date.now()),yest=dayKey(Date.now()-864e5);
+  $('history').innerHTML=(log.length?[...groups.entries()].map(([d,items])=>{
+    const label=d===today?'Today':d===yest?'Yesterday':new Date(items[0].ts).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+    return `<div class="day-group"><p class="day-label">${label}</p>`+items.map(e=>{
+      const k=kids[e.kid]||{name:'?',col:'#999'};
+      const time=new Date(e.ts).toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+      return `<div class="log-item"><span class="emoji">${e.emoji||(e.type==='redeem'?'🎁':'⭐')}</span>
+        <div class="what"><div class="label">${esc(e.label)} <span class="kid-tag" style="background:${k.col}">${esc(k.name)}</span></div>
+        <div class="meta">${e.type==='redeem'?'redeemed':'by '+esc(e.by||'parent')} · ${time}</div></div>
+        <span class="delta ${e.pts>=0?'plus':'minus'}">${e.pts>=0?'+':''}${e.pts}</span></div>`;
+    }).join('')+'</div>';
+  }).join(''):'<p class="locked-note">No entries yet — the scroll awaits its first story ✍️</p>')
+  +(log.length>histLimit?`<button class="more-btn" id="moreHist">Show more</button>`:'');
+  const m=$('moreHist'); if(m)m.onclick=()=>{histLimit+=25;renderHistory()};
+  $('histFilter').querySelectorAll('button').forEach(b=>b.onclick=()=>{histKid=b.dataset.f;histLimit=25;renderHistory()});
+}
+
+/* ================= award flow ================= */
+let awardKid=null;
+function openAward(kidId){
+  awardKid=kidId;
+  const k=state.kids.find(x=>x.id===kidId);
+  $('awardTitle').textContent=`${k.avatar} Points for ${k.name}`;
+  $('posGrid').innerHTML=state.behaviors.positive.map((b,i)=>
+    `<button data-beh="p${i}"><span>${b.emoji}</span><span class="bl">${esc(b.label)}</span><span class="bp plus">+${b.pts}</span></button>`).join('');
+  $('negGrid').innerHTML=state.behaviors.negative.map((b,i)=>
+    `<button data-beh="n${i}"><span>${b.emoji}</span><span class="bl">${esc(b.label)}</span><span class="bp minus">${b.pts}</span></button>`).join('');
+  $('awardDlg').showModal();
+}
+async function giveBehavior(code){
+  const list=code[0]==='p'?state.behaviors.positive:state.behaviors.negative;
+  const b=list[+code.slice(1)]; if(!b)return;
+  const kidId=awardKid, snap={...b};
+  $('awardDlg').close();
+  const ok=await commit(s=>{
+    const k=s.kids.find(x=>x.id===kidId); if(!k)return;
+    k.points+=snap.pts;
+    if(snap.pts>0)k.totalEarned+=snap.pts;
+    s.log.push({ts:Date.now(),kid:kidId,type:'award',label:snap.label,emoji:snap.emoji,pts:snap.pts,by:who()});
+  },`${snap.pts>0?'+':''}${snap.pts} ${snap.label}`);
+  if(ok&&snap.pts>0)confetti();
+  if(ok)toast(`${snap.emoji} ${snap.pts>0?'+':''}${snap.pts} for ${state.kids.find(x=>x.id===kidId)?.name}`);
+}
+async function redeem(kidId,ri){
+  const r=state.rewards[ri],k=state.kids.find(x=>x.id===kidId);
+  if(!r||!k)return;
+  if(!window.confirm(`Redeem "${r.label}" (${r.cost} pts) for ${k.name}?`))return;
+  const label=r.label,cost=r.cost,emoji=r.emoji;
+  const ok=await commit(s=>{
+    const kk=s.kids.find(x=>x.id===kidId); if(!kk||kk.points<cost)throw new Error('not enough points');
+    kk.points-=cost;
+    s.log.push({ts:Date.now(),kid:kidId,type:'redeem',label,emoji,pts:-cost,by:who()});
+  },`redeem ${label}`);
+  if(ok)toast(`🎁 ${label} redeemed for ${k.name}!`);
+}
+
+/* ================= kid detail ================= */
+function openKid(kidId){
+  const i=state.kids.findIndex(x=>x.id===kidId),k=state.kids[i];
+  const {b,next}=belt(k.totalEarned);
+  const pct=next?Math.round((k.totalEarned-b.at)/(next.at-b.at)*100):100;
+  $('kidDlgTitle').textContent=`${k.avatar} ${k.name}'s story`;
+  $('kidDlgBody').innerHTML=`
+    <div style="text-align:center">
+      <div style="font-family:var(--display);font-size:2.6rem;font-weight:800">${k.points} <small style="font-size:1rem;color:var(--ink-soft)">pts now</small></div>
+      <div style="color:var(--ink-soft);font-weight:700">${k.totalEarned} earned all-time · 🔥 ${streak(k)}-day streak</div>
+    </div>
+    <div class="subhead">Belt journey</div>
+    <div style="font-weight:800">${b.name} belt ${next?`→ ${next.name} at ${next.at}`:'(MAX!)'}</div>
+    <div class="belt-progress"><div style="width:${pct}%;background:${next?next.c:b.c}"></div></div>
+    <div style="font-size:.78rem;color:var(--ink-soft)">${next?`${next.at-k.totalEarned} more lifetime points to level up`:'Top of the dojo 🥷'}</div>
+    <div class="subhead">Badges</div>
+    <div class="badges">${BADGES.map(bd=>`<span class="badge ${k.totalEarned>=bd.at?'':'locked'}">${bd.emoji} ${bd.name}</span>`).join('')}</div>`;
+  $('kidDlg').showModal();
+}
+
+/* ================= family-password vault ================= */
+const VAULT_API=`https://api.github.com/repos/${OWNER}/${REPO}/contents/vault.json`;
+let vault; // undefined = not checked, null = none, object = {salt,iv,ct}
+const b64=a=>btoa(String.fromCharCode(...new Uint8Array(a)));
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function pwKey(pw,salt){
+  const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:310000,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+}
+async function loadVault(){
+  try{
+    const r=await fetch(`${VAULT_API}?ref=${BRANCH}&t=${Date.now()}`,{headers:ghHeaders(),cache:'no-store'});
+    if(r.status===404){vault=null;return}
+    if(!r.ok){vault=undefined;return}
+    const j=await r.json();
+    vault=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/\n/g,'')))));
+    vault._sha=j.sha;
+  }catch(e){vault=undefined}
+}
+async function saveVault(tokenStr,pw){
+  const salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+  const key=await pwKey(pw,salt);
+  const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(tokenStr));
+  const v={salt:b64(salt),iv:b64(iv),ct:b64(ct)};
+  const body={message:'set family password',branch:BRANCH,content:btoa(JSON.stringify(v))};
+  if(vault&&vault._sha)body.sha=vault._sha;
+  const r=await fetch(VAULT_API,{method:'PUT',headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+tokenStr,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error('vault save '+r.status);
+  vault={...v,_sha:(await r.json()).content.sha};
+}
+async function openVault(pw){
+  const key=await pwKey(pw,unb64(vault.salt));
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(vault.iv)},key,unb64(vault.ct));
+  return new TextDecoder().decode(pt);
+}
+
+/* ================= parent mode ================= */
+function openParent(){
+  const body=$('parentBody');
+  if(!isParent()){
+    const hasVault=!!vault;
+    body.innerHTML=hasVault?`
+      <div class="field"><label>Family password</label>
+        <input type="password" id="pwIn" autocomplete="current-password" placeholder="the one you both know">
+        <span class="hint">One-time per device. Kids' devices: skip this — they can watch without it.</span>
+      </div>
+      <div class="field"><label>Who are you?</label>
+        <div class="seg" id="whoSeg"><button data-w="Appa">Appa</button><button data-w="Amma">Amma</button></div>
+      </div>
+      <div class="btn-row"><button class="btn gold" id="unlock">Unlock parent mode</button></div>
+      <p class="hint" style="color:var(--ink-soft);font-size:.78rem">Advanced: <button id="useTok" style="text-decoration:underline;font-weight:800;padding:0">unlock with a GitHub token</button></p>`
+    :`
+      <div class="field"><label>GitHub token (first-time setup)</label>
+        <input type="password" id="tokIn" placeholder="github_pat_… or ghp_…" autocomplete="off">
+        <span class="hint">Fine-grained token for <b>${OWNER}/${REPO}</b> with <b>Contents: read &amp; write</b>.</span>
+      </div>
+      <div class="field"><label>Set a family password</label>
+        <input type="password" id="pwSet" autocomplete="new-password" placeholder="something you and your wife will remember">
+        <span class="hint">After this, both of you unlock any device with just this password.</span>
+      </div>
+      <div class="field"><label>Who are you?</label>
+        <div class="seg" id="whoSeg"><button data-w="Appa">Appa</button><button data-w="Amma">Amma</button></div>
+      </div>
+      <div class="btn-row"><button class="btn gold" id="unlock">Set up &amp; unlock</button></div>`;
+    let w='';
+    body.querySelectorAll('#whoSeg button').forEach(b=>b.onclick=()=>{w=b.dataset.w;body.querySelectorAll('#whoSeg button').forEach(x=>x.classList.toggle('on',x===b))});
+    const finish=async t=>{
+      try{localStorage.setItem(LS.token,t);localStorage.setItem(LS.who,w||'Parent')}catch(e){}
+      const r=await fetch(`${API}?ref=${BRANCH}`,{headers:ghHeaders()});
+      if(!r.ok){try{localStorage.removeItem(LS.token)}catch(e){};toast('That didn’t work — token invalid or expired',true);return false}
+      $('parentDlg').close();toast('🔓 Parent mode on');render();return true;
+    };
+    const useTok=$('useTok');
+    if(useTok)useTok.onclick=()=>{
+      body.querySelector('.field').innerHTML=`<label>GitHub token</label>
+        <input type="password" id="tokIn" placeholder="github_pat_… or ghp_…" autocomplete="off">`;
+      $('unlock').onclick=()=>{const t=$('tokIn').value.trim();if(!t){toast('Paste a token first',true);return}finish(t)};
+    };
+    $('unlock').onclick=async()=>{
+      if(hasVault){
+        const pw=$('pwIn').value;
+        if(!pw){toast('Type the family password',true);return}
+        try{const t=await openVault(pw);await finish(t)}
+        catch(e){toast('Wrong password — try again',true)}
+      }else{
+        const t=$('tokIn').value.trim(),pw=$('pwSet').value;
+        if(!t){toast('Paste a token first',true);return}
+        if(pw&&pw.length<6){toast('Password needs 6+ characters',true);return}
+        if(await finish(t)&&pw){
+          try{await saveVault(t,pw);toast('🔐 Family password set — Venka can now unlock with it')}
+          catch(e){toast('Password not saved — token still works',true)}
+        }
+      }
+    };
+  }else{
+    body.innerHTML=`
+      <p style="margin-top:0">Unlocked as <b>${esc(who())}</b> on this device.</p>
+      <div class="field"><label>Who are you?</label>
+        <div class="seg" id="whoSeg">
+          <button data-w="Appa" class="${who()==='Appa'?'on':''}">Appa</button>
+          <button data-w="Amma" class="${who()==='Amma'?'on':''}">Amma</button>
+        </div></div>
+      <div class="field"><label>Family password</label>
+        <input type="password" id="pwChange" autocomplete="new-password" placeholder="${vault?'change it':'set one so Venka can unlock easily'}">
+        <span class="hint">Lets any parent unlock any device with just this password.</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn ghost" id="savePw">${vault?'Change password':'Set password'}</button>
+        <button class="btn ghost" id="lock">Lock this device</button>
+        <button class="btn" id="doneP">Done</button>
+      </div>`;
+    $('savePw').onclick=async()=>{
+      const pw=$('pwChange').value;
+      if(!pw||pw.length<6){toast('Password needs 6+ characters',true);return}
+      try{await saveVault(token(),pw);toast('🔐 Family password saved')}
+      catch(e){toast('Could not save password',true)}
+    };
+    body.querySelectorAll('#whoSeg button').forEach(b=>b.onclick=()=>{try{localStorage.setItem(LS.who,b.dataset.w)}catch(e){};body.querySelectorAll('#whoSeg button').forEach(x=>x.classList.toggle('on',x===b));render()});
+    $('lock').onclick=()=>{try{localStorage.removeItem(LS.token)}catch(e){};$('parentDlg').close();toast('🔒 Locked');render()};
+    $('doneP').onclick=()=>$('parentDlg').close();
+  }
+  $('parentDlg').showModal();
+}
+
+/* ================= editors ================= */
+function rowHtml(item,kind){
+  return `<div class="edit-row">
+    <input class="em" value="${esc(item.emoji)}" maxlength="4" aria-label="emoji">
+    <input class="lb" value="${esc(item.label)}" aria-label="label">
+    <input class="pt" type="number" value="${kind==='reward'?item.cost:item.pts}" aria-label="points">
+    <button class="del" title="remove">✕</button></div>`;
+}
+function openEditor(kind){ // 'behaviors' | 'rewards'
+  $('editTitle').textContent=kind==='rewards'?'Edit rewards':'Edit behaviors';
+  const body=$('editBody');
+  const mk=(items,k)=>items.map(it=>rowHtml(it,k)).join('');
+  if(kind==='rewards'){
+    body.innerHTML=`<div id="rw">${mk(state.rewards,'reward')}</div>
+      <button class="addline" id="addR">＋ add reward</button>
+      <div class="btn-row"><button class="btn gold" id="saveEd">Save</button></div>`;
+    $('addR').onclick=()=>{$('rw').insertAdjacentHTML('beforeend',rowHtml({emoji:'🎈',label:'New reward',cost:20},'reward'));wireDel()};
+  }else{
+    body.innerHTML=`<div class="subhead">⭐ Positive</div><div id="pos">${mk(state.behaviors.positive,'beh')}</div>
+      <button class="addline" id="addP">＋ add positive</button>
+      <div class="subhead">🌧 Needs work (points auto-negative)</div><div id="neg">${mk(state.behaviors.negative,'beh')}</div>
+      <button class="addline" id="addN">＋ add needs-work</button>
+      <div class="btn-row"><button class="btn gold" id="saveEd">Save</button></div>`;
+    $('addP').onclick=()=>{$('pos').insertAdjacentHTML('beforeend',rowHtml({emoji:'✨',label:'New behavior',pts:1},'beh'));wireDel()};
+    $('addN').onclick=()=>{$('neg').insertAdjacentHTML('beforeend',rowHtml({emoji:'⚠️',label:'New behavior',pts:-1},'beh'));wireDel()};
+  }
+  const wireDel=()=>body.querySelectorAll('.del').forEach(b=>b.onclick=()=>b.closest('.edit-row').remove());
+  wireDel();
+  const collect=div=>[...div.querySelectorAll('.edit-row')].map(r=>{
+    const[em,lb,pt]=r.querySelectorAll('input');
+    return{emoji:em.value||'⭐',label:lb.value.trim(),n:parseInt(pt.value,10)||0};
+  }).filter(x=>x.label);
+  $('saveEd').onclick=async()=>{
+    let ok;
+    if(kind==='rewards'){
+      const items=collect(body.querySelector('#rw')).map(x=>({emoji:x.emoji,label:x.label,cost:Math.max(1,Math.abs(x.n))}));
+      ok=await commit(s=>{s.rewards=items},'edit rewards');
+    }else{
+      const pos=collect(body.querySelector('#pos')).map(x=>({emoji:x.emoji,label:x.label,pts:Math.max(1,Math.abs(x.n))}));
+      const neg=collect(body.querySelector('#neg')).map(x=>({emoji:x.emoji,label:x.label,pts:-Math.max(1,Math.abs(x.n))}));
+      ok=await commit(s=>{s.behaviors={positive:pos,negative:neg}},'edit behaviors');
+    }
+    if(ok){$('editDlg').close();toast('Saved ✔')}
+  };
+  $('editDlg').showModal();
+}
+
+/* ================= confetti ================= */
+function confetti(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const cv=$('confetti'),ctx=cv.getContext('2d');
+  cv.width=innerWidth;cv.height=innerHeight;
+  const cols=['#F5B301','#0FA37F','#F26B3A','#3F7EF5','#8A4FE0'];
+  const ps=Array.from({length:90},()=>({x:innerWidth/2+(Math.random()-0.5)*160,y:innerHeight*0.35,vx:(Math.random()-0.5)*9,vy:-Math.random()*10-3,g:0.3,s:Math.random()*7+4,c:cols[Math.floor(Math.random()*cols.length)],r:Math.random()*Math.PI,vr:(Math.random()-0.5)*0.3,life:80+Math.random()*40}));
+  let frame=0;
+  (function tick(){
+    ctx.clearRect(0,0,cv.width,cv.height);frame++;let alive=false;
+    for(const p of ps){
+      if(frame>p.life)continue;alive=true;
+      p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.globalAlpha=Math.max(0,1-frame/p.life);ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6);ctx.restore();
+    }
+    if(alive)requestAnimationFrame(tick);else ctx.clearRect(0,0,cv.width,cv.height);
+  })();
+}
+
+/* ================= toast ================= */
+let toastT;
+function toast(msg,err){
+  const t=$('toast');t.textContent=msg;t.hidden=false;t.className=err?'err show':'show';
+  clearTimeout(toastT);toastT=setTimeout(()=>{t.className=err?'err':'';},2600);
+}
+
+/* ================= wiring ================= */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button');if(!t)return;
+  if(t.dataset.award)openAward(t.dataset.award);
+  else if(t.dataset.detail)openKid(t.dataset.detail);
+  else if(t.dataset.beh)giveBehavior(t.dataset.beh);
+  else if(t.dataset.redeem){const[k,ri]=t.dataset.redeem.split('|');redeem(k,+ri)}
+  else if(t.hasAttribute('data-close'))t.closest('dialog').close();
+});
+$('parentBtn').onclick=openParent;
+$('editRewards').onclick=()=>openEditor('rewards');
+$('editBehaviors').onclick=()=>{$('awardDlg').close();openEditor('behaviors')};
+
+async function refresh(){if(busy)return;try{await loadState();setDot('ok');render()}catch(e){setDot('err')}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh()});
+setInterval(()=>{if(!document.hidden)refresh()},90000);
+
+(async function init(){
+  $('main').style.opacity='.4';
+  loadVault();
+  try{await loadState();setDot('ok')}
+  catch(e){setDot('err');$('kids').innerHTML='<p class="locked-note">Could not load the dojo — check internet and refresh.</p>'}
+  $('main').style.opacity='1';
+  render();
+})();
+</script>
+</body>
+</html>
