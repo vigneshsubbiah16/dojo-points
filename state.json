@@ -63,28 +63,7 @@
         "pts": 3
       }
     ],
-    "negative": [
-      {
-        "emoji": "\ud83d\ude24",
-        "label": "Fighting with brother",
-        "pts": -2
-      },
-      {
-        "emoji": "\ud83d\ude49",
-        "label": "Not listening",
-        "pts": -1
-      },
-      {
-        "emoji": "\ud83d\udcf1",
-        "label": "Screen time over limit",
-        "pts": -2
-      },
-      {
-        "emoji": "\ud83e\uddf9",
-        "label": "Mess left out",
-        "pts": -1
-      }
-    ]
+    "negative": []
   },
   "rewards": [],
   "log": []

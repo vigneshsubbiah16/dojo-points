@@ -21,6 +21,7 @@
   --body:'Nunito','Avenir Next',system-ui,sans-serif;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{margin:0}
 body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
 button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
@@ -166,7 +167,7 @@ footer{text-align:center;color:var(--ink-soft);font-size:.78rem;padding:10px}
   <div class="modal-head"><h4 id="awardTitle">Award points</h4><button class="x" data-close>✕</button></div>
   <div class="modal-body">
     <div class="subhead">⭐ Positive</div><div class="beh-grid" id="posGrid"></div>
-    <div class="subhead">🌧 Needs work</div><div class="beh-grid" id="negGrid"></div>
+    <div class="subhead" id="negHead">🌧 Needs work</div><div class="beh-grid" id="negGrid"></div>
     <button class="addline" id="editBehaviors" style="display:none">＋ edit behaviors…</button>
   </div>
 </dialog>
@@ -361,6 +362,8 @@ function openAward(kidId){
     `<button data-beh="p${i}"><span>${b.emoji}</span><span class="bl">${esc(b.label)}</span><span class="bp plus">+${b.pts}</span></button>`).join('');
   $('negGrid').innerHTML=state.behaviors.negative.map((b,i)=>
     `<button data-beh="n${i}"><span>${b.emoji}</span><span class="bl">${esc(b.label)}</span><span class="bp minus">${b.pts}</span></button>`).join('');
+  const hasNeg=state.behaviors.negative.length>0;
+  $('negHead').hidden=!hasNeg; $('negGrid').hidden=!hasNeg;
   $('awardDlg').showModal();
 }
 async function giveBehavior(code){
