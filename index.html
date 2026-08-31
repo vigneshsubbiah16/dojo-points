@@ -259,7 +259,7 @@ async function commit(mutate,msg){
     throw new Error('conflict');
   }catch(e){
     setDot('err');
-    toast(e.status===401||e.status===403?'Token rejected — check parent settings':'Could not save — try again',true);
+    toast(e.status===401||e.status===403?'Token can read but not write — edit it at github.com/settings → dojo-bros → Contents: Read and write':'Could not save — try again',true);
     try{await loadState();render()}catch(_){}
     busy=false; return false;
   }
@@ -607,7 +607,7 @@ function confetti(){
 let toastT;
 function toast(msg,err){
   const t=$('toast');t.textContent=msg;t.hidden=false;t.className=err?'err show':'show';
-  clearTimeout(toastT);toastT=setTimeout(()=>{t.className=err?'err':'';},2600);
+  clearTimeout(toastT);toastT=setTimeout(()=>{t.className=err?'err':'';},err?7000:2600);
 }
 
 /* ================= wiring ================= */
