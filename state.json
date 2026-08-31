@@ -71,6 +71,11 @@
         "emoji": "✨",
         "label": "dress change without asking",
         "pts": 1
+      },
+      {
+        "emoji": "❤️",
+        "label": "being patient",
+        "pts": 1
       }
     ],
     "negative": [
