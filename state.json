@@ -4,8 +4,8 @@
       "id": "niranjan",
       "name": "Niranjan",
       "avatar": "🐯",
-      "points": 1,
-      "totalEarned": 1
+      "points": 2,
+      "totalEarned": 2
     },
     {
       "id": "nikhilan",
@@ -103,6 +103,15 @@
       "label": "20 min reading",
       "emoji": "📖",
       "pts": 2,
+      "by": "Appa"
+    },
+    {
+      "ts": 1788144543299,
+      "kid": "niranjan",
+      "type": "award",
+      "label": "half home work",
+      "emoji": "✨",
+      "pts": 1,
       "by": "Appa"
     }
   ]
