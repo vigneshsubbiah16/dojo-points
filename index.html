@@ -83,6 +83,8 @@ section>h3 .count{font-size:.8rem;background:var(--card);border:1px solid var(--
 .log-item .delta{font-family:var(--display);font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums;flex:none}
 .delta.plus{color:var(--good)}.delta.minus{color:var(--bad)}
 .kid-tag{display:inline-block;border-radius:999px;padding:1px 8px;font-size:.72rem;font-weight:800;color:#fff;vertical-align:1px}
+.log-item .undo{flex:none;color:#B4AC9C;font-weight:800;font-size:.85rem;padding:6px 8px;border-radius:8px}
+.log-item .undo:hover{color:var(--bad);background:#FDECEC}
 .hist-filter{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .hist-filter button{border-radius:999px;padding:5px 14px;font-weight:800;font-size:.82rem;background:var(--card);border:1.5px solid var(--line);color:var(--ink-soft)}
 .hist-filter button.on{background:var(--ink);border-color:var(--ink);color:#fff}
@@ -344,7 +346,8 @@ function renderHistory(){
       return `<div class="log-item"><span class="emoji">${e.emoji||(e.type==='redeem'?'🎁':'⭐')}</span>
         <div class="what"><div class="label">${esc(e.label)} <span class="kid-tag" style="background:${k.col}">${esc(k.name)}</span></div>
         <div class="meta">${e.type==='redeem'?'redeemed':'by '+esc(e.by||'parent')} · ${time}</div></div>
-        <span class="delta ${e.pts>=0?'plus':'minus'}">${e.pts>=0?'+':''}${e.pts}</span></div>`;
+        <span class="delta ${e.pts>=0?'plus':'minus'}">${e.pts>=0?'+':''}${e.pts}</span>
+        ${isParent()?`<button class="undo" data-undo="${e.ts}|${e.kid}" title="undo this entry">✕</button>`:''}</div>`;
     }).join('')+'</div>';
   }).join(''):'<p class="locked-note">No entries yet — the scroll awaits its first story ✍️</p>')
   +(log.length>histLimit?`<button class="more-btn" id="moreHist">Show more</button>`:'');
@@ -391,6 +394,23 @@ async function redeem(kidId,ri){
     s.log.push({ts:Date.now(),kid:kidId,type:'redeem',label,emoji,pts:-cost,by:who()});
   },`redeem ${label}`);
   if(ok)toast(`🎁 ${label} redeemed for ${k.name}!`);
+}
+
+async function undoEntry(ts,kidId){
+  const e=state.log.find(x=>x.ts===ts&&x.kid===kidId);
+  const k=state.kids.find(x=>x.id===kidId);
+  if(!e||!k)return;
+  const what=e.type==='redeem'?`refund "${e.label}" (+${-e.pts} pts back)`:`remove "${e.label}" (${e.pts>0?'-':'+'}${Math.abs(e.pts)} pts)`;
+  if(!window.confirm(`Undo for ${k.name}: ${what}?`))return;
+  const ok=await commit(s=>{
+    const i=s.log.findIndex(x=>x.ts===ts&&x.kid===kidId);
+    if(i<0)throw new Error('entry already gone');
+    const en=s.log[i],kk=s.kids.find(x=>x.id===kidId);
+    kk.points-=en.pts;
+    if(en.type==='award'&&en.pts>0)kk.totalEarned-=en.pts;
+    s.log.splice(i,1);
+  },`undo ${e.label}`);
+  if(ok)toast(`↩️ Undone — ${e.label}`);
 }
 
 /* ================= kid detail ================= */
@@ -617,6 +637,7 @@ document.addEventListener('click',e=>{
   else if(t.dataset.detail)openKid(t.dataset.detail);
   else if(t.dataset.beh)giveBehavior(t.dataset.beh);
   else if(t.dataset.redeem){const[k,ri]=t.dataset.redeem.split('|');redeem(k,+ri)}
+  else if(t.dataset.undo){const[ts,k]=t.dataset.undo.split('|');undoEntry(+ts,k)}
   else if(t.hasAttribute('data-close'))t.closest('dialog').close();
 });
 $('parentBtn').onclick=openParent;
