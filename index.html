@@ -309,6 +309,10 @@ function renderKids(){
   }).join('');
 }
 function renderRewards(){
+  if(!state.rewards.length){
+    $('rewards').innerHTML=`<p class="locked-note" style="grid-column:1/-1">The shelf is empty — ${isParent()?'tap <b>edit</b> above to add rewards and their point prices.':'Appa &amp; Amma are stocking it soon! 🎁'}</p>`;
+    return;
+  }
   $('rewards').innerHTML=state.rewards.map((r,ri)=>`
     <div class="reward">
       <span class="emoji">${r.emoji}</span>
