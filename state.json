@@ -66,6 +66,11 @@
         "emoji": "✨",
         "label": "half home work",
         "pts": 1
+      },
+      {
+        "emoji": "✨",
+        "label": "dress change without asking",
+        "pts": 1
       }
     ],
     "negative": []
