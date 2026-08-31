@@ -11,8 +11,8 @@
       "id": "nikhilan",
       "name": "Nikhilan",
       "avatar": "🐉",
-      "points": 1,
-      "totalEarned": 1
+      "points": 3,
+      "totalEarned": 3
     }
   ],
   "behaviors": {
@@ -83,6 +83,15 @@
       "label": "Morning routine done",
       "emoji": "🪥",
       "pts": 1,
+      "by": "Appa"
+    },
+    {
+      "ts": 1788144314986,
+      "kid": "nikhilan",
+      "type": "award",
+      "label": "20 min reading",
+      "emoji": "📖",
+      "pts": 2,
       "by": "Appa"
     }
   ]
