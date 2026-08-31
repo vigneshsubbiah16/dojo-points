@@ -3,14 +3,14 @@
     {
       "id": "niranjan",
       "name": "Niranjan",
-      "avatar": "\ud83d\udc2f",
-      "points": 0,
-      "totalEarned": 0
+      "avatar": "🐯",
+      "points": 1,
+      "totalEarned": 1
     },
     {
       "id": "nikhilan",
       "name": "Nikhilan",
-      "avatar": "\ud83d\udc09",
+      "avatar": "🐉",
       "points": 0,
       "totalEarned": 0
     }
@@ -18,47 +18,47 @@
   "behaviors": {
     "positive": [
       {
-        "emoji": "\ud83d\udcda",
+        "emoji": "📚",
         "label": "Finished homework",
         "pts": 2
       },
       {
-        "emoji": "\ud83e\udea5",
+        "emoji": "🪥",
         "label": "Morning routine done",
         "pts": 1
       },
       {
-        "emoji": "\ud83d\udcd6",
+        "emoji": "📖",
         "label": "20 min reading",
         "pts": 2
       },
       {
-        "emoji": "\ud83e\udd1d",
+        "emoji": "🤝",
         "label": "Helped without asking",
         "pts": 3
       },
       {
-        "emoji": "\u2764\ufe0f",
+        "emoji": "❤️",
         "label": "Kind to brother",
         "pts": 2
       },
       {
-        "emoji": "\ud83e\uddf8",
+        "emoji": "🧸",
         "label": "Cleaned up toys",
         "pts": 1
       },
       {
-        "emoji": "\ud83e\udd66",
+        "emoji": "🥦",
         "label": "Ate veggies",
         "pts": 1
       },
       {
-        "emoji": "\ud83d\ude34",
+        "emoji": "😴",
         "label": "Bedtime on time",
         "pts": 1
       },
       {
-        "emoji": "\ud83d\udcaa",
+        "emoji": "💪",
         "label": "Tried something hard",
         "pts": 3
       }
@@ -66,5 +66,15 @@
     "negative": []
   },
   "rewards": [],
-  "log": []
+  "log": [
+    {
+      "ts": 1788144248399,
+      "kid": "niranjan",
+      "type": "award",
+      "label": "Morning routine done",
+      "emoji": "🪥",
+      "pts": 1,
+      "by": "Appa"
+    }
+  ]
 }
