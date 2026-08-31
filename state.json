@@ -4,8 +4,8 @@
       "id": "niranjan",
       "name": "Niranjan",
       "avatar": "🐯",
-      "points": 1,
-      "totalEarned": 1
+      "points": 2,
+      "totalEarned": 2
     },
     {
       "id": "nikhilan",
@@ -20,7 +20,7 @@
       {
         "emoji": "📚",
         "label": "Finished homework",
-        "pts": 2
+        "pts": 3
       },
       {
         "emoji": "🪥",
@@ -45,12 +45,12 @@
       {
         "emoji": "🧸",
         "label": "Cleaned up toys",
-        "pts": 1
+        "pts": 3
       },
       {
         "emoji": "🥦",
         "label": "Ate veggies",
-        "pts": 1
+        "pts": 3
       },
       {
         "emoji": "😴",
@@ -61,11 +61,22 @@
         "emoji": "💪",
         "label": "Tried something hard",
         "pts": 3
+      },
+      {
+        "emoji": "✨",
+        "label": "half home work",
+        "pts": 1
       }
     ],
     "negative": []
   },
-  "rewards": [],
+  "rewards": [
+    {
+      "emoji": "🎈",
+      "label": "cricket practice",
+      "cost": 10
+    }
+  ],
   "log": [
     {
       "ts": 1788144248399,
@@ -92,6 +103,15 @@
       "label": "20 min reading",
       "emoji": "📖",
       "pts": 2,
+      "by": "Appa"
+    },
+    {
+      "ts": 1788144543299,
+      "kid": "niranjan",
+      "type": "award",
+      "label": "half home work",
+      "emoji": "✨",
+      "pts": 1,
       "by": "Appa"
     }
   ]
