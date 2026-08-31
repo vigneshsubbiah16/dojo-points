@@ -65,7 +65,13 @@
     ],
     "negative": []
   },
-  "rewards": [],
+  "rewards": [
+    {
+      "emoji": "🎈",
+      "label": "ice cream",
+      "cost": 30
+    }
+  ],
   "log": [
     {
       "ts": 1788144248399,
