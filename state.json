@@ -11,8 +11,8 @@
       "id": "nikhilan",
       "name": "Nikhilan",
       "avatar": "🐉",
-      "points": 4,
-      "totalEarned": 4
+      "points": 5,
+      "totalEarned": 5
     }
   ],
   "behaviors": {
@@ -187,6 +187,15 @@
     {
       "ts": 1788744268557,
       "kid": "niranjan",
+      "type": "award",
+      "label": "half home work",
+      "emoji": "✨",
+      "pts": 1,
+      "by": "Appa"
+    },
+    {
+      "ts": 1788744282302,
+      "kid": "nikhilan",
       "type": "award",
       "label": "half home work",
       "emoji": "✨",
