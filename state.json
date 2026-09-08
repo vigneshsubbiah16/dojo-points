@@ -4,8 +4,8 @@
       "id": "niranjan",
       "name": "Niranjan",
       "avatar": "🐯",
-      "points": 11,
-      "totalEarned": 11
+      "points": 12,
+      "totalEarned": 12
     },
     {
       "id": "nikhilan",
@@ -209,6 +209,15 @@
       "label": "Cleaned up toys",
       "emoji": "🧸",
       "pts": 3,
+      "by": "Appa"
+    },
+    {
+      "ts": 1788906231404,
+      "kid": "niranjan",
+      "type": "award",
+      "label": "dress change without asking",
+      "emoji": "✨",
+      "pts": 1,
       "by": "Appa"
     }
   ]
