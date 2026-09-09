@@ -83,6 +83,11 @@
         "emoji": "⚠️",
         "label": "brother/amma/appa beat",
         "pts": -5
+      },
+      {
+        "emoji": "⚠️",
+        "label": "running in home",
+        "pts": -2
       }
     ]
   },
