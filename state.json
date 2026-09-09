@@ -11,7 +11,7 @@
       "id": "nikhilan",
       "name": "Nikhilan",
       "avatar": "🐉",
-      "points": 5,
+      "points": 3,
       "totalEarned": 5
     }
   ],
@@ -228,6 +228,15 @@
     {
       "ts": 1788924378571,
       "kid": "niranjan",
+      "type": "award",
+      "label": "running in home",
+      "emoji": "⚠️",
+      "pts": -2,
+      "by": "Appa"
+    },
+    {
+      "ts": 1788924382350,
+      "kid": "nikhilan",
       "type": "award",
       "label": "running in home",
       "emoji": "⚠️",
