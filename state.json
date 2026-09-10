@@ -101,6 +101,11 @@
       "emoji": "🎈",
       "label": "apple watch",
       "cost": 200
+    },
+    {
+      "emoji": "🎈",
+      "label": "ipad",
+      "cost": 200
     }
   ],
   "log": [
