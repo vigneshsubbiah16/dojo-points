@@ -96,6 +96,11 @@
       "emoji": "🎈",
       "label": "cricket practice",
       "cost": 10
+    },
+    {
+      "emoji": "🎈",
+      "label": "apple watch",
+      "cost": 200
     }
   ],
   "log": [
